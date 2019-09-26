@@ -1,0 +1,9 @@
+CMakeFiles
+lamp_control_autogen
+CMakeCache.txt
+cmake_install.cmake
+lamp_control
+Makefile
+ui_mainwindow.h
+source/include/moc_mainwindow.cpp
+source/include/moc_mainwindow.cpp_parameters
