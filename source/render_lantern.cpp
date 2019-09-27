@@ -32,7 +32,7 @@ void RenderLantern::swithOff()
 {
     power = SWITCH::OFF;
     ledColor = Qt::gray;
-    win->repaint();
+    win->repaint(drawingRect);
 }
 
 void RenderLantern::changeColor(tlv_shared_ptr package)
@@ -55,7 +55,7 @@ void RenderLantern::update(tlv_shared_ptr package)
         break;
     }
     if(power == SWITCH::ON)
-        win->repaint();
+        win->repaint(drawingRect);
 }
 
 void RenderLantern::drawLed(QPainter* p)

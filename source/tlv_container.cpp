@@ -31,11 +31,11 @@ void TLVContainer::attach(Observer *obs) const
     m_views.push_back(obs);
 }
 
-void TLVContainer:: notify(tlv_shared_ptr packages)
+void TLVContainer:: notify(tlv_shared_ptr package)
 {
     for(auto view : m_views)
     {
-        view->update(packages);
+        view->update(package);
     }
 }
 
@@ -46,7 +46,6 @@ void TLVContainer::getFromSocket(const QByteArray& data)
     for(const auto& package : packages)
     {
         notify(package);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
