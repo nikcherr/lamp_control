@@ -1,11 +1,6 @@
 #include "tcp_client.h"
 #include <iostream>
 #include <QDataStream>
-#include <QtEndian>
-
-#ifdef Q_WS_WIN
-#include <future>
-#endif
 
 TCPClient::TCPClient()
 {
