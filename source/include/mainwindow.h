@@ -27,7 +27,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    QTimer* connection_timer;
+    std::unique_ptr<QTimer> connection_timer;
     std::unique_ptr<TCPClient, decltype(custom_deleter)> client;
     std::shared_ptr<tlv::TLVContainer> container;
     std::unique_ptr<RenderLantern> lantern;

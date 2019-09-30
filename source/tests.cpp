@@ -61,45 +61,45 @@ QByteArray createBigByteArray()
 void socketDataParsing()
 {
     tlv::TLVContainer container;
-    std::vector<tlv::tlv_shared_ptr> received = container.parseSocketData(createByteArray());
+    std::deque<tlv::TLV> received = container.parseSocketData(createByteArray());
     {
         ASSERT(received.size() == 3);
     }
     {
-        ASSERT_EQUAL(received[0]->getType(), TYPE_ON);
-        ASSERT_EQUAL(received[1]->getType(), TYPE_CHANGE_COLOR);
-        ASSERT_EQUAL(received[2]->getType(), TYPE_OFF);
+        ASSERT_EQUAL(received[0].getType(), TYPE_ON);
+        ASSERT_EQUAL(received[1].getType(), TYPE_CHANGE_COLOR);
+        ASSERT_EQUAL(received[2].getType(), TYPE_OFF);
     }
     {
-        ASSERT_EQUAL(received[0]->getLength(), 0);
-        ASSERT_EQUAL(received[1]->getLength(), 3);
-        ASSERT_EQUAL(received[2]->getLength(), 0);
+        ASSERT_EQUAL(received[0].getLength(), 0);
+        ASSERT_EQUAL(received[1].getLength(), 3);
+        ASSERT_EQUAL(received[2].getLength(), 0);
     }
     {
         std::vector<unsigned char> given = {};
-        ASSERT_EQUAL(received[0]->getValue(), given);
+        ASSERT_EQUAL(received[0].getValue(), given);
     }
     {
         std::vector<unsigned char> given = {0xeb, 0x72, 0x2e};
-        ASSERT_EQUAL(received[1]->getValue(), given);
+        ASSERT_EQUAL(received[1].getValue(), given);
     }
     {
         std::vector<unsigned char> given = {};
-        ASSERT_EQUAL(received[2]->getValue(), given);
+        ASSERT_EQUAL(received[2].getValue(), given);
     }
 }
 
 void socketBigDataParsing()
 {
     tlv::TLVContainer container;
-    std::vector<tlv::tlv_shared_ptr> received = container.parseSocketData(createBigByteArray());
+    std::deque<tlv::TLV> received = container.parseSocketData(createBigByteArray());
     {
         ASSERT(received.size() == TLV_COUNT);
     }
     {
-        ASSERT_EQUAL(received[0]->getType(), TYPE_ON);
-        ASSERT_EQUAL(received[1]->getType(), TYPE_CHANGE_COLOR);
-        ASSERT_EQUAL(received[TLV_COUNT - 1]->getType(), TYPE_OFF);
+        ASSERT_EQUAL(received[0].getType(), TYPE_ON);
+        ASSERT_EQUAL(received[1].getType(), TYPE_CHANGE_COLOR);
+        ASSERT_EQUAL(received[TLV_COUNT - 1].getType(), TYPE_OFF);
     }
 }
 

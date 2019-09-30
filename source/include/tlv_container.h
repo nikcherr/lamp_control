@@ -1,13 +1,11 @@
 #pragma once
-#include <vector>
 #include <memory>
 #include <tlv.h>
 #include <observer.h>
 #include <QObject>
+#include <deque>
 
 namespace tlv{
-
-using tlv_shared_ptr = std::shared_ptr<TLV>;
 
 class TLVContainer : public QObject
 {
@@ -15,15 +13,15 @@ class TLVContainer : public QObject
 
 public:
     TLVContainer();
-    std::vector<tlv_shared_ptr> parseSocketData(const QByteArray& data);
+    std::deque<TLV> parseSocketData(const QByteArray& data);
     void attach(Observer* obs) const;
-    void notify(tlv_shared_ptr package);
+    void notify(const TLV& package);
 
 public slots:
     void getFromSocket(const QByteArray& data);
 
 private:
-    std::vector<tlv_shared_ptr> packages;
+    std::deque<TLV> packages;
     mutable std::vector<Observer*> m_views;
     uint16_t swapOctects(uint16_t w);
 };

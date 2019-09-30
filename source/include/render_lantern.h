@@ -23,7 +23,7 @@ class RenderLantern : public Observer
 {
 public:
     RenderLantern(QWidget* parent, const tlv::TLVContainer* tlv_container);
-    void update(std::shared_ptr<tlv::TLV> package) override;
+    void update(const tlv::TLV& package) override;
     void drawLed(QPainter* p);
     void resize();
 
@@ -63,5 +63,5 @@ private:
     bool default_color = true;
     void swithOn();
     void swithOff();
-    void changeColor(tlv::tlv_shared_ptr package);
+    void changeColor(const tlv::TLV& package);
 };

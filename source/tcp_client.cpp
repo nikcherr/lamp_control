@@ -2,7 +2,10 @@
 #include <iostream>
 #include <QDataStream>
 #include <QtEndian>
+
+#ifdef Q_WS_WIN
 #include <future>
+#endif
 
 TCPClient::TCPClient()
 {
@@ -30,14 +33,7 @@ void TCPClient::run(const std::string& address, unsigned short port)
 
 void TCPClient::tryGetSocket(const std::string& address, unsigned short port)
 {
-#ifdef Q_WS_WIN
-    std::future<void> f = std::async([&](){
-#endif
-        socket->connectToHost(QString::fromStdString(address), port);
-#ifdef Q_WS_WIN
-    });
-    f.wait();
-#endif
+    socket->connectToHost(QString::fromStdString(address), port);
 }
 
 void TCPClient::readSocketData()

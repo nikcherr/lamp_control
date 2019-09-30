@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     client(new TCPClient, custom_deleter)
 {
     ui->setupUi(this);
-    connection_timer = new QTimer();
+    connection_timer = std::make_unique<QTimer>();
     container = std::make_shared<TLVContainer>();
     lantern = std::make_unique<RenderLantern>(this, container.get());
 
@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(client.get(), SIGNAL(send_to_TLVContainer(const QByteArray&)), container.get(), SLOT(getFromSocket(const QByteArray&)));
     QObject::connect(client->getSocket(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onClientStateChange(QAbstractSocket::SocketState)));
-    QObject::connect(connection_timer, SIGNAL(timeout()), this, SLOT(tryToConnect()));
+    QObject::connect(connection_timer.get(), SIGNAL(timeout()), this, SLOT(tryToConnect()));
 
     client->run(address, port);
 }

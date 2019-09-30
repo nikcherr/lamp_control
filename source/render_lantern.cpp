@@ -35,15 +35,15 @@ void RenderLantern::swithOff()
     win->repaint(drawingRect);
 }
 
-void RenderLantern::changeColor(tlv_shared_ptr package)
+void RenderLantern::changeColor(const TLV& package)
 {
-    ledColor = QColor(package->getValue()[0], package->getValue()[1], package->getValue()[2]);
+    ledColor = QColor(package.getValue()[0], package.getValue()[1], package.getValue()[2]);
     default_color = false;
 }
 
-void RenderLantern::update(tlv_shared_ptr package)
+void RenderLantern::update(const TLV& package)
 {
-    switch (package->getType()) {
+    switch (package.getType()) {
     case TYPE_ON:
         swithOn();
         break;

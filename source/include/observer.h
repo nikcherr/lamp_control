@@ -6,5 +6,5 @@ class Observer
 {
   public:
     virtual ~Observer() { }
-    virtual void update(std::shared_ptr<tlv::TLV> package) = 0;
+    virtual void update(const tlv::TLV& package) = 0;
 };

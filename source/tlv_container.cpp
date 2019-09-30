@@ -1,15 +1,14 @@
 #include <tlv_container.h>
 #include <iostream>
 #include <thread>
-#include <vector>
 
 namespace tlv{
 
 TLVContainer::TLVContainer() : QObject () { }
 
-std::vector<tlv_shared_ptr> TLVContainer::parseSocketData(const QByteArray& data)
+std::deque<TLV> TLVContainer::parseSocketData(const QByteArray& data)
 {
-    std::vector<tlv_shared_ptr> result;
+    std::deque<TLV> result;
     char tmp_type;
     uint16_t tmp_length = 0;
     int offset = 0;
@@ -20,7 +19,7 @@ std::vector<tlv_shared_ptr> TLVContainer::parseSocketData(const QByteArray& data
         offset += sizeof(char);
         tmp_length = swapOctects(*(uint16_t *)(data.begin() + offset));
         offset += sizeof(uint16_t);
-        result.push_back(std::make_shared<TLV>(tmp_type, tmp_length, std::vector<unsigned char>(data.begin() + offset, data.begin() + offset + tmp_length)));
+        result.emplace_back(tmp_type, tmp_length, std::vector<unsigned char>(data.begin() + offset, data.begin() + offset + tmp_length));
         offset += tmp_length;
     }
     return result;
@@ -31,7 +30,7 @@ void TLVContainer::attach(Observer *obs) const
     m_views.push_back(obs);
 }
 
-void TLVContainer:: notify(tlv_shared_ptr package)
+void TLVContainer:: notify(const TLV& package)
 {
     for(auto view : m_views)
     {
