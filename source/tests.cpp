@@ -5,6 +5,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <log_duration.h>
 
 template<typename T>
 std::ostream& operator <<(std::ostream& out, const std::vector<T>& v){
@@ -14,7 +15,7 @@ std::ostream& operator <<(std::ostream& out, const std::vector<T>& v){
     return out;
 }
 
-const size_t TLV_COUNT = 100000;
+const size_t TLV_COUNT = 1000000;
 
 QByteArray createByteArray()
 {
@@ -92,7 +93,12 @@ void socketDataParsing()
 void socketBigDataParsing()
 {
     tlv::TLVContainer container;
-    std::deque<tlv::TLV> received = container.parseSocketData(createBigByteArray());
+    std::deque<tlv::TLV> received;
+    QByteArray data = createBigByteArray();
+    {
+        LOG_DURATION("big data parsing");
+        received = container.parseSocketData(data);
+    }
     {
         ASSERT(received.size() == TLV_COUNT);
     }
