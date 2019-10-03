@@ -18,7 +18,7 @@ const unsigned char* TLV::getData() const
     return pValue.data();
 }
 
-const std::vector<unsigned char> TLV::getValue() const
+const std::vector<unsigned char>& TLV::getValue() const
 {
     return pValue;
 }

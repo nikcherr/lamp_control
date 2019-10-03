@@ -16,8 +16,8 @@ public:
         std::cout << _message << duration_cast<milliseconds>(duration).count() << " ms" << std::endl;
     }
 private:
-    std::chrono::steady_clock::time_point _start;
     std::string _message;
+    std::chrono::steady_clock::time_point _start;
 };
 
 #define UNIQ_VARIABLE_NAME_IMPL(line) __variable__##line

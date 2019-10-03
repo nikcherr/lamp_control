@@ -12,7 +12,7 @@ public:
     char getType() const;
     uint16_t getLength() const;
     const unsigned char* getData() const;
-    const std::vector<unsigned char> getValue() const;
+    const std::vector<unsigned char>& getValue() const;
 
 private:
     char pType;
