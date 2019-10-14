@@ -2,13 +2,13 @@
 #include <iostream>
 #include <chrono>
 
-class Log_Duration{
+class LogDuration{
 public:
-    Log_Duration(const std::string& message)
+    LogDuration(const std::string& message)
         : _message(message + ": "),
           _start(std::chrono::steady_clock::now())
     { }
-    ~Log_Duration()
+    ~LogDuration()
     {
         using namespace std::chrono;
         auto _finish = steady_clock::now();
@@ -24,4 +24,4 @@ private:
 #define UNIQ_VARIABLE_NAME(line) UNIQ_VARIABLE_NAME_IMPL(line)
 
 #define LOG_DURATION(message) \
-  Log_Duration UNIQ_VARIABLE_NAME(__LINE__) {message};
+  LogDuration UNIQ_VARIABLE_NAME(__LINE__) {message};

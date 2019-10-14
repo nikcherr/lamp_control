@@ -15,7 +15,7 @@ std::ostream& operator <<(std::ostream& out, const std::vector<T>& v){
     return out;
 }
 
-const size_t TLV_COUNT = 1000000;
+const size_t TLV_COUNT = 2000000;
 
 QByteArray createByteArray()
 {
