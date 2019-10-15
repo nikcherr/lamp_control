@@ -2,7 +2,8 @@
 #include <algorithm>
 
 template<typename Iterator>
-class IteratorRange{
+class IteratorRange
+{
 public:
     IteratorRange(Iterator begin, Iterator end)
         : _begin(begin), _end(end), _size(distance(_begin, _end)) { }

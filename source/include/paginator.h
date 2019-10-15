@@ -3,7 +3,8 @@
 #include <vector>
 
 template<typename Iterator>
-class Paginator {
+class Paginator
+{
 private:
   std::vector<IteratorRange<Iterator>> pages;
 
@@ -17,7 +18,8 @@ public:
 template<typename Iterator>
 Paginator<Iterator>::Paginator(Iterator begin, Iterator end, size_t page_size)
 {
-    for (size_t left = distance(begin, end); left > 0; ) {
+    for (size_t left = distance(begin, end); left > 0; )
+    {
       size_t current_page_size = std::min(page_size, left);
       Iterator current_page_end = next(begin, current_page_size);
       pages.push_back({begin, current_page_end});

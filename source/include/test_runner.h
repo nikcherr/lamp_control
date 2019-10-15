@@ -40,20 +40,20 @@ private:
     int test_fail = 0;
 };
 
-#define RUN_TEST(tr, func){		 		\
-    tr.RunTest(func, #func); 			\
+#define RUN_TEST(tr, func){             \
+    tr.RunTest(func, #func);            \
 }
 
-#define ASSERT_EQUAL(x, y){				\
-    std::ostringstream s;				\
-    s << #x << " != " << #y << ", " 	\
-    << __FILE__ << ": " << __LINE__;	\
-    AssertEqual(x, y, s.str()); 		\
+#define ASSERT_EQUAL(x, y){             \
+    std::ostringstream s;               \
+    s << #x << " != " << #y << ", "     \
+    << __FILE__ << ": " << __LINE__;    \
+    AssertEqual(x, y, s.str());         \
 }
 
-#define ASSERT(b){						\
-    std::ostringstream s;				\
-    s << #b << " is false, " <<			\
-    __FILE__ << ": " << __LINE__;		\
-    Assert(b, s.str());					\
+#define ASSERT(b){                      \
+    std::ostringstream s;               \
+    s << #b << " is false, " <<         \
+    __FILE__ << ": " << __LINE__;       \
+    Assert(b, s.str());                 \
 }

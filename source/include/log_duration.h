@@ -2,12 +2,12 @@
 #include <iostream>
 #include <chrono>
 
-class LogDuration{
+class LogDuration
+{
 public:
     LogDuration(const std::string& message)
         : _message(message + ": "),
-          _start(std::chrono::steady_clock::now())
-    { }
+          _start(std::chrono::steady_clock::now()) { }
     ~LogDuration()
     {
         using namespace std::chrono;

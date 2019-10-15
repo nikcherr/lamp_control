@@ -1,21 +1,23 @@
-#include <tests.h>
 #include <QByteArray>
-#include <tlv_container.h>
-#include <render_lantern.h>
+#include <parser.h>
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <render_lantern.h>
 #include <log_duration.h>
+#include <tests.h>
 
 template<typename T>
-std::ostream& operator <<(std::ostream& out, const std::vector<T>& v){
-    for(const auto& item : v){
+std::ostream& operator <<(std::ostream& out, const std::vector<T>& v)
+{
+    for(const auto& item : v)
+    {
         out << item << " ";
     }
     return out;
 }
 
-const size_t TLV_COUNT = 2000000;
+const size_t TLV_COUNT = 1000000;
 
 QByteArray createByteArray()
 {
@@ -42,12 +44,15 @@ QByteArray createBigByteArray()
 
     std::srand(time(0));
 
-    for(size_t i = 0; i < TLV_COUNT; ++i){
-        if(i == 0){
+    for(size_t i = 0; i < TLV_COUNT; ++i)
+    {
+        if(i == 0)
+        {
             given.append(on);
             continue;
         }
-        if(i == (TLV_COUNT - 1)){
+        if(i == (TLV_COUNT - 1))
+        {
             given.append(off);
             continue;
         }
@@ -61,8 +66,8 @@ QByteArray createBigByteArray()
 
 void socketDataParsing()
 {
-    tlv::TLVContainer container;
-    std::deque<tlv::TLV> received = container.parseSocketData(createByteArray());
+    QByteArray data = createByteArray();
+    std::deque<tlv::TLV> received = Parser::parseData(data);
     {
         ASSERT(received.size() == 3);
     }
@@ -92,12 +97,15 @@ void socketDataParsing()
 
 void socketBigDataParsing()
 {
-    tlv::TLVContainer container;
-    std::deque<tlv::TLV> received;
     QByteArray data = createBigByteArray();
+    std::deque<tlv::TLV> received;
     {
-        LOG_DURATION("big data parsing");
-        received = container.parseSocketData(data);
+        LOG_DURATION("multi thread big data parsing");
+        received = Parser::multiThreadParseData(data);
+    }
+    {
+        LOG_DURATION("one thread big data parsing");
+        Parser::parseData(data);
     }
     {
         ASSERT(received.size() == TLV_COUNT);
