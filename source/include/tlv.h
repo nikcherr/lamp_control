@@ -7,8 +7,9 @@ namespace tlv {
 class TLV
 {
 public:
+    TLV(){ }
     template<typename Type>
-    TLV(char type, uint16_t length, Type&& value);
+    explicit TLV(char type, uint16_t length, Type&& value);
     char getType() const;
     uint16_t getLength() const;
     const unsigned char* getData() const;

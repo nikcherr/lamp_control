@@ -1,5 +1,4 @@
 #include <tlv.h>
-#include <cstring>
 
 namespace tlv{
 

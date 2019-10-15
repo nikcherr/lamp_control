@@ -1,6 +1,5 @@
 #pragma once
 #include <tlv.h>
-#include <memory>
 
 class Observer
 {
