@@ -42,7 +42,7 @@ storage Parser::multiThreadParseData(const QByteArray& data)
         int end = offsets[shift * page.size() - 1];
 
         f.push_back(std::async(std::launch::async, [=](){
-            parseData(page, data, offset, end);
+            parseData(page, data, offset);
         }));
 
         offset = end;
