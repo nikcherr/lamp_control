@@ -1,4 +1,5 @@
 #include <parser.h>
+#include <QThread>
 
 storage Parser::parseData(const QByteArray& data)
 {
@@ -20,6 +21,8 @@ storage Parser::parseData(const QByteArray& data)
 
 storage Parser::multiThreadParseData(const QByteArray& data)
 {
+    int threadCount;
+    threadCount = QThread::idealThreadCount();
     std::vector<int> offsets;
     uint16_t tmp_length = 0;
     int offset = 0;
@@ -35,11 +38,11 @@ storage Parser::multiThreadParseData(const QByteArray& data)
     offset = 0;
     int shift = 1;
     storage result(offsets.size());
-    for(auto page : Paginate(result, offsets.size() / 4)){
+    for(auto page : Paginate(result, offsets.size() / threadCount)){
         int end = offsets[shift * page.size() - 1];
 
         f.push_back(std::async(std::launch::async, [=](){
-            parseData(page, data, offset, end);
+            parseData(page, data, offset);
         }));
 
         offset = end;

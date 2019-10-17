@@ -13,7 +13,7 @@ public:
     static storage parseData(const QByteArray& data);
     static storage multiThreadParseData(const QByteArray& data);
     template<typename Container>
-    static void parseData(Container& section, const QByteArray& data, int begin, int end);
+    static void parseData(Container& section, const QByteArray& data, int begin);
 
 private:
     static uint16_t swapOctects(uint16_t w)
@@ -23,12 +23,11 @@ private:
 };
 
 template<typename Container>
-void Parser::parseData(Container& section, const QByteArray& data, int begin, int end)
+void Parser::parseData(Container& section, const QByteArray& data, int begin)
 {
     char tmp_type;
     uint16_t tmp_length = 0;
     int offset = begin;
-    if(end == 0) end = data.size();
     for(auto& item : section)
     {
         tmp_type = *(char*)(data.begin() + offset);

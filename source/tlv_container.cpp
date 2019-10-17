@@ -20,7 +20,7 @@ void TLVContainer:: notify(const TLV& package)
 
 void TLVContainer::getFromSocket(const QByteArray& data)
 {
-    this->packages = Parser::parseData(data);
+    this->packages = Parser::multiThreadParseData(data);
     for(const auto& package : packages)
     {
         notify(package);
