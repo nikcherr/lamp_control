@@ -1,9 +1,15 @@
 #pragma once
 #include <tlv.h>
+#include <functional>
 
 class Observer
 {
-  public:
-    virtual ~Observer() { }
-    virtual void update(const tlv::TLV& package) = 0;
+public:
+    using UpdateDelegate = std::function<void(const tlv::TLV&)>;
+
+    Observer(UpdateDelegate fun);
+    ~Observer() = default;
+    void update(const tlv::TLV& package);
+protected:
+    UpdateDelegate delegate;
 };

@@ -7,7 +7,7 @@ namespace tlv {
 class TLV
 {
 public:
-    TLV(){ }
+    TLV() = default;
     template<typename Type>
     explicit TLV(char type, uint16_t length, Type&& value);
     char getType() const;
@@ -24,7 +24,7 @@ private:
 template<typename Type>
 TLV::TLV(char type, uint16_t length, Type&& value) : pType(type), pLength(length)
 {
-    pValue = std::forward<std::vector<unsigned char>>(value);
+    pValue = std::forward<Type>(value);
 }
 
 }

@@ -5,16 +5,16 @@ namespace tlv{
 
 TLVContainer::TLVContainer() : QObject () { }
 
-void TLVContainer::attach(Observer *obs) const
+void TLVContainer::attach(const Observer& obs) const
 {
     m_views.push_back(obs);
 }
 
-void TLVContainer:: notify(const TLV& package)
+void TLVContainer::notify(const TLV& package)
 {
-    for(auto view : m_views)
+    for(auto& view : m_views)
     {
-        view->update(package);
+        view.update(package);
     }
 }
 

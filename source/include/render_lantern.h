@@ -19,11 +19,11 @@ enum class SWITCH
     OFF, ON
 };
 
-class RenderLantern : public Observer
+class RenderLantern
 {
 public:
     RenderLantern(QWidget* parent, const tlv::TLVContainer* tlv_container);
-    void update(const tlv::TLV& package) override;
+    void update(const tlv::TLV& package);
     void drawLed(QPainter* p);
     void resize();
 

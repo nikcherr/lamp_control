@@ -1,9 +1,10 @@
 #include <render_lantern.h>
 #include <tlv_container.h>
-
+#include <functional>
 using namespace tlv;
 
-RenderLantern::RenderLantern(QWidget* parent, const TLVContainer* tlv_container) :
+RenderLantern::RenderLantern(QWidget* parent, const TLVContainer* tlv_container)
+    :
     win(parent),
     ledColor(Qt::gray),
     lightColor(QColor(0xE0, 0xE0, 0xE0)),
@@ -16,7 +17,11 @@ RenderLantern::RenderLantern(QWidget* parent, const TLVContainer* tlv_container)
     bottomReflexCenterColor(QColor(0xFF, 0xFF, 0xFF, 0x00)),
     bottomReflexSideColor(QColor(0xFF, 0xFF, 0xFF, 0x70))
 {
-    tlv_container->attach(this);
+    Observer observer(std::bind(&RenderLantern::update, this, std::placeholders::_1));
+    if(tlv_container)
+    {
+        tlv_container->attach(observer);
+    }
 }
 
 void RenderLantern::swithOn()

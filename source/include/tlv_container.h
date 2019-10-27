@@ -13,7 +13,7 @@ class TLVContainer : public QObject
 
 public:
     TLVContainer();
-    void attach(Observer* obs) const;
+    void attach(const Observer& obs) const;
     void notify(const TLV& package);
 
 public slots:
@@ -21,7 +21,7 @@ public slots:
 
 private:
     std::deque<TLV> packages;
-    mutable std::vector<Observer*> m_views;
+    mutable std::vector<Observer> m_views;
 };
 
 }
