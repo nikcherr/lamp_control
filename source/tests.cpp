@@ -7,6 +7,8 @@
 #include <log_duration.h>
 #include <tests.h>
 
+using namespace tlv;
+
 template<typename T>
 std::ostream& operator <<(std::ostream& out, const std::vector<T>& v)
 {
@@ -67,7 +69,7 @@ QByteArray createBigByteArray()
 void socketDataParsing()
 {
     QByteArray data = createByteArray();
-    std::deque<tlv::TLV> received = Parser::parseData(data);
+    std::deque<TLV> received = Parser<TLV>::parseData(data);
     {
         ASSERT(received.size() == 3);
     }
@@ -98,14 +100,18 @@ void socketDataParsing()
 void socketBigDataParsing()
 {
     QByteArray data = createBigByteArray();
-    std::deque<tlv::TLV> received;
+    std::deque<TLV> received;
     {
-        LOG_DURATION("multi thread big data parsing");
-        received = Parser::multiThreadParseData(data);
+        LOG_DURATION("multi thread big data parsing to std::vector");
+        std::vector<TLV> v_received = Parser<TLV, std::vector>::multiThreadParseData(data);
     }
     {
-        LOG_DURATION("one thread big data parsing");
-        Parser::parseData(data);
+        LOG_DURATION("multi thread big data parsing to std::deque");
+        received = Parser<TLV>::multiThreadParseData(data);
+    }
+    {
+        LOG_DURATION("one thread big data parsing to std::deque");
+        Parser<TLV>::parseData(data);
     }
     {
         ASSERT(received.size() == TLV_COUNT);
